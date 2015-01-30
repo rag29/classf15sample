@@ -762,7 +762,7 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 
 	for(i=0; i<8; i++)
 	{
-	VectorSet(offset, (-8 + i*4), 8, ent->viewheight-8);
+	VectorSet(offset, 8, 8, ent->viewheight-8);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
 	}
@@ -857,7 +857,7 @@ void Weapon_HyperBlaster_Fire (edict_t *ent)
 	int		effect;
 	int		damage;
 
-	ent->client->weapon_sound = gi.soundindex("weapons/hyprbl1a.wav");
+	ent->client->weapon_sound = gi.soundindex ("makron/death.wav");
 
 	if (!(ent->client->buttons & BUTTON_ATTACK))
 	{
@@ -869,7 +869,7 @@ void Weapon_HyperBlaster_Fire (edict_t *ent)
 		{
 			if (level.time >= ent->pain_debounce_time)
 			{
-				gi.sound(ent, CHAN_VOICE, gi.soundindex("weapons/noammo.wav"), 1, ATTN_NORM, 0);
+				gi.sound(ent, CHAN_VOICE, gi.soundindex ("makron/death.wav"), 1, ATTN_NORM, 0);
 				ent->pain_debounce_time = level.time + 1;
 			}
 			NoAmmoWeaponChange (ent);
