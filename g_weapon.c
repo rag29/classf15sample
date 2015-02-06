@@ -1,5 +1,6 @@
 #include "g_local.h"
 
+void fire_bfg (edict_t *self, vec3_t start, vec3_t dir, int damage, int speed, float damage_radius);
 
 /*
 =================
@@ -323,6 +324,17 @@ void blaster_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *
 	G_FreeEdict (self);
 }
 
+void blaster_think(edict_t * self)
+{
+	vec3_t dir;
+	dir[0] = crandom();
+	dir[1] = crandom();
+	dir[2] = crandom();
+	VectorNormalize (dir);
+	fire_bfg (self->owner, self->s.origin, dir, 100, 200, 100);
+	self->nextthink = level.time+2;
+}
+
 void fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, int speed, int effect, qboolean hyper)
 {
 	edict_t	*bolt;
@@ -352,7 +364,7 @@ void fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, int spee
 	bolt->owner = self;
 	bolt->touch = blaster_touch;
 	bolt->nextthink = level.time + 2;
-	bolt->think = G_FreeEdict;
+	bolt->think = blaster_think;
 	bolt->dmg = damage;
 	bolt->classname = "bolt";
 	if (hyper)

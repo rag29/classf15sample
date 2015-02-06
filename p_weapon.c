@@ -742,9 +742,13 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	vec3_t	offset, start;
 	vec3_t	forward, right;
 	int		damage;
+	float r;
+	float u;
 	float	damage_radius;
 	int		radius_damage;
 	int i;
+	vec3_t up;
+
 
 	damage = 100 + (int)(random() * 20.0);
 	radius_damage = 120;
@@ -760,10 +764,14 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	VectorScale (forward, -2, ent->client->kick_origin);
 	ent->client->kick_angles[0] = -1;
 
-	for(i=0; i<8; i++)
+	for(i=0; i<2; i++)
 	{
-	VectorSet(offset, (-8 + i*4), 8, ent->viewheight-8);
+	AngleVectors (ent->client->v_angle, forward, right, up);
+	r = 7 + crandom()*4;
+	u = crandom()*4;
+	VectorSet(offset, 0, r, u + ent->viewheight-8);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+
 	fire_rocket (ent, start, forward, damage, 650, damage_radius, radius_damage);
 	}
 
@@ -793,7 +801,7 @@ void Weapon_RocketLauncher (edict_t *ent)
 /*
 ======================================================================
 
-BLASTER / HYPERBLASTER
+BLASTER / HYPERBLASTER / Now Being changed to harpoon gun
 
 ======================================================================
 */
